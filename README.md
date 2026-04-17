@@ -1,10 +1,106 @@
 # 🚀 Ultra Code Studio v2.0
+### L'Environnement de Développement IA Nouvelle Génération
 
-**Ultra Professional AI-Powered IDE - Web & Desktop avec support MCP**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![Electron](https://img.shields.io/badge/Electron-28-purple.svg)](https://www.electronjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
+[![MCP](https://img.shields.io/badge/MCP-Protocol-orange.svg)](https://modelcontextprotocol.io/)
 
-Une application de développement ultra-professionnelle inspirée de coder.qwen.ai, Claude Code, et GitHub Copilot, avec des fonctionnalités avancées pour le développement moderne.
+> **Ultra Code Studio** est une plateforme de développement hybride (Web & Desktop) qui fusionne la puissance de **Claude Code**, **GitHub Copilot**, et **Qwen Code** dans une interface ultra-moderne inspirée de *coder.qwen.ai*. Doté du protocole **MCP (Model Context Protocol)** et d'un terminal natif, il redéfinit l'expérience de codage assisté par IA.
 
-## ✨ Fonctionnalités Principales
+---
+
+## 🌟 Pourquoi Ultra Code Studio ?
+
+| Fonctionnalité | Ultra Code Studio | VS Code + Extensions | En ligne (Qwen/Claude) |
+| :--- | :---: | :---: | :---: |
+| **Mode Hybride** (Web/Desktop) | ✅ Natif | ❌ Desktop uniquement | ❌ Web uniquement |
+| **Protocole MCP** | ✅ Complet | ⚠️ Via extensions tierces | ❌ Non supporté |
+| **Terminal Natif (PTY)** | ✅ Intégré | ✅ Intégré | ❌ Limité/Simulé |
+| **Confidentialité** | 🔒 Local First | 🔒 Local | ☁️ Cloud Only |
+| **Multi-Modèles IA** | ✅ OpenAI, Anthropic, Qwen, Local | ⚠️ Config complexe | ❌ Modèle unique |
+| **Interface Moderne** | ✅ Design 2024 | ⚠️ Classique | ✅ Moderne |
+
+---
+
+## 🛠️ Architecture Technique
+
+Ultra Code Studio repose sur une architecture modulaire en trois couches :
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    FRONTEND (React 18)                      │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────────┐   │
+│  │ Monaco Editor│ │  Chat Panel │ │   File Tree/Tags    │   │
+│  └─────────────┘ └─────────────┘ └─────────────────────┘   │
+│         │                │                      │           │
+│         └────────────────┼──────────────────────┘           │
+│                          ▼                                  │
+│              ┌───────────────────────┐                      │
+│              │   Zustand Store       │                      │
+│              │  (State Management)   │                      │
+│              └───────────────────────┘                      │
+└─────────────────────────────────────────────────────────────┘
+             │ IPC (Electron)        │ WebSocket (Web)
+             ▼                       ▼
+┌─────────────────────────┐ ┌─────────────────────────────────┐
+│   ELECTRON MAIN PROCESS │ │      BACKEND EXPRESS SERVER     │
+│  ┌───────────────────┐  │ │  ┌───────────────────────────┐  │
+│  │  node-pty (TTY)   │  │ │  │   Socket.IO Server        │  │
+│  │  Native Dialogs   │  │ │  │   REST API Proxy          │  │
+│  │  File System API  │  │ │  │   MCP Server Bridge       │  │
+│  └───────────────────┘  │ │  └───────────────────────────┘  │
+└─────────────────────────┘ └─────────────────────────────────┘
+             │                       │
+             └───────────┬───────────┘
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│              MODEL CONTEXT PROTOCOL (MCP) SERVER            │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────┐   │
+│  │FileSystem│ │  Git Ops │ │  Shell   │ │ Search/Find  │   │
+│  │  Tools   │ │  Tools   │ │  Executor│ │   Tools      │   │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Stack Technologique
+- **Core** : React 18, TypeScript 5, Vite 5
+- **Desktop** : Electron 28, node-pty (Terminal réel)
+- **State Management** : Zustand (Rapide & léger)
+- **Styling** : TailwindCSS 3 + Shadcn/UI (Composants atomiques)
+- **Editor** : Monaco Editor (Le moteur de VS Code)
+- **Backend** : Express.js + Socket.IO (Temps réel)
+- **IA Protocol** : Model Context Protocol (MCP) SDK
+
+---
+
+## ✨ Fonctionnalités Ultra-Pro
+
+### 1. 🧠 Cerveau IA Multi-Providers
+Connectez-vous à n'importe quel modèle de langage :
+- **Cloud** : GPT-4o, Claude 3.5 Sonnet, Qwen 2.5 Coder.
+- **Local** : Ollama, LM Studio (via API compatible OpenAI).
+- **Contexte Intelligent** : L'IA analyse votre arborescence, les fichiers ouverts et le terminal pour des suggestions pertinentes.
+
+### 2. 🔌 MCP Desktop Commander
+Implémentation native du **Model Context Protocol**. L'IA peut interagir avec votre machine de manière sécurisée :
+- 📂 `read_file` / `write_file` : Manipulation de fichiers.
+- 🔍 `search_files` : Recherche sémantique et regex.
+- ⚡ `execute_command` : Exécution shell sécurisée.
+- 🌳 `list_directory` : Exploration de projet.
+- 📊 `git_status` / `git_diff` : Contrôle de version intégré.
+
+### 3. 💻 Terminal Intégré Haute Performance
+Oubliez les terminaux web limités. Ultra Code Studio utilise `node-pty` pour un vrai shell :
+- Support complet de **Bash**, **Zsh**, **PowerShell**.
+- Gestion des signaux (Ctrl+C, Ctrl+Z).
+- Couleurs et sorties interactives (htop, vim, ncurses).
+
+### 4. 🎨 Interface "Coder.qwen.ai" Inspired
+- **Design Épuré** : Mode sombre profond, typographie optimisée pour le code.
+- **Panneaux Redimensionnables** : Ajustez l'espace entre l'éditeur, le chat et le terminal.
+- **Sidebar Intelligente** : Arborescence de fichiers avec détection automatique de `.gitignore`.
 
 ### 🎯 Interface Professionnelle
 - **Design Moderne** - Interface similaire à coder.qwen.ai avec thème sombre/clair
@@ -68,159 +164,101 @@ Une application de développement ultra-professionnelle inspirée de coder.qwen.
 - **Provider IA Actif** - Modèle sélectionné
 - **État MCP** - Status du serveur MCP
 
-## 🏗️ Architecture Technique
+---
 
-### Frontend
-- **React 18** - Framework UI moderne
-- **TypeScript** - Typage statique complet
-- **Vite** - Build tool ultra-rapide
-- **TailwindCSS** - Styling utilitaire
-- **Zustand** - State management léger
-- **Monaco Editor** - Moteur d'édition VS Code
-- **Lucide Icons** - Icônes modernes
-- **Socket.IO Client** - Communication WebSocket
-
-### Backend (Optionnel pour web)
-- **Express.js** - Serveur HTTP
-- **Socket.IO** - WebSocket server
-- **Node-PTY** - Terminal pseudo-TTY
-- **CORS** - Partage de ressources
-
-### Desktop (Electron)
-- **Electron 28** - Framework desktop cross-platform
-- **IPC Bridge** - Communication secure renderer-main
-- **Context Isolation** - Sécurité renforcée
-- **Native Dialogs** - Fenêtres natives OS
-
-### MCP Server
-- **@modelcontextprotocol/sdk** - SDK officiel MCP
-- **Outils Personnalisés** - File system, git, shell
-- **Resources** - Accès aux fichiers via URI
-- **Prompts** - Templates de conversation
-
-## 📦 Installation
+## 🚀 Installation & Démarrage
 
 ### Prérequis
-- Node.js 18+ 
-- npm ou yarn
-- 500MB d'espace disque minimum
+- **Node.js** v18+ ou v20+
+- **npm** ou **yarn**
+- (Optionnel) **Python 3** pour certains outils MCP avancés
 
-### Installation des dépendances
+### 1. Clonage et Installation
 
 ```bash
-cd /workspace
+git clone https://github.com/votre-user/ultra-code-studio.git
+cd ultra-code-studio
 npm install
 ```
 
-### Modes d'exécution
+### 2. Configuration (.env)
+Créez un fichier `.env` à la racine :
 
-#### 1. Mode Web (Navigateur)
+```ini
+# Clés API (Optionnel, peut être défini dans l'UI)
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+QWEN_API_KEY=...
+
+# Port du serveur
+PORT=3000
+VITE_WS_URL=ws://localhost:3000
+```
+
+### 3. Modes d'Exécution
+
+#### 🌐 Mode Web (Navigateur)
+Idéal pour un accès rapide ou un déploiement serveur distant.
 ```bash
-# Démarrer le frontend uniquement
 npm run dev
+# Ouvre http://localhost:5173
+```
 
-# Dans un autre terminal, démarrer le backend (optionnel)
+#### 🖥️ Mode Desktop (Application Native)
+Recommandé pour une expérience complète avec terminal natif et accès système.
+```bash
+npm run electron:dev
+```
+
+#### 🔧 Mode Serveur Backend (Pour Web)
+Si vous utilisez le mode web avec fonctionnalités backend (MCP, Terminal WebSocket) :
+```bash
 npm run server
 ```
 
-Accédez à `http://localhost:5173`
-
-#### 2. Mode Desktop (Electron)
+#### 🔌 Mode Serveur MCP
+Pour exécuter le serveur MCP indépendamment :
 ```bash
-# Démarrer en mode développement
-npm run electron:dev
-
-# Build pour production
-npm run electron:build
-```
-
-#### 3. Serveur MCP
-```bash
-# Démarrer le serveur MCP
 npm run mcp:server
 ```
 
-## 🎮 Utilisation
+---
 
-### Raccourcis Clavier
-| Touche | Action |
-|--------|--------|
-| `Ctrl/Cmd + \`` | Toggle Terminal |
-| `Ctrl/Cmd + B` | Toggle Sidebar |
-| `Ctrl/Cmd + S` | Sauvegarder fichier |
-| `Ctrl/Cmd + W` | Fermer onglet |
-| `↑/↓` | Historique terminal |
-| `Ctrl+C` | Interruption commande |
-| `Ctrl+L` | Clear terminal |
+## ⌨️ Raccourcis Clavier
 
-### Configuration IA
+| Action | Windows/Linux | macOS |
+| :--- | :--- | :--- |
+| **Toggle Terminal** | `Ctrl` + `\`` | `Cmd` + `\`` |
+| **Toggle Sidebar** | `Ctrl` + `B` | `Cmd` + `B` |
+| **Sauvegarder** | `Ctrl` + `S` | `Cmd` + `S` |
+| **Recherche Fichier** | `Ctrl` + `P` | `Cmd` + `P` |
+| **Clear Terminal** | `Ctrl` + `L` | `Cmd` + `K` |
+| **Fermer Onglet** | `Ctrl` + `W` | `Cmd` + `W` |
+| **Historique ↑/↓** | `↑` / `↓` | `↑` / `↓` |
+| **Interruption** | `Ctrl` + `C` | `Ctrl` + `C` |
 
-Ajoutez vos clés API dans les paramètres :
+---
 
-```typescript
-// Dans l'interface de configuration
-{
-  provider: 'openai', // ou 'anthropic', 'qwen', 'local'
-  apiKey: 'votre-clé-api',
-  model: 'gpt-4-turbo'
-}
-```
+## 🔒 Sécurité & Confidentialité
 
-### Configuration MCP
+Ultra Code Studio est conçu avec une approche **Local-First** :
+1. **Données Locales** : Votre code ne quitte jamais votre machine sauf si vous interrogez explicitement une API IA.
+2. **Sandboxing** : Le processus MCP s'exécute avec des permissions restreintes.
+3. **Transparence** : Toutes les commandes exécutées par l'IA sont affichées dans le terminal pour validation.
+4. **Context Isolation** : Séparation stricte entre renderer et main process (Electron).
+5. **IPC Validation** : Validation stricte de tous les messages IPC.
 
-Le serveur MCP expose ces outils :
-- `read_file` - Lire un fichier
-- `write_file` - Écrire un fichier
-- `list_directory` - Lister un répertoire
-- `execute_command` - Exécuter une commande
-- `search_files` - Rechercher des fichiers
-- `get_file_info` - Infos fichier
-- `create_directory` - Créer dossier
-- `delete_path` - Supprimer
-- `git_status` - Status git
-- `git_diff` - Diff git
+---
 
-## 📁 Structure du Projet
+## 📊 Performances
 
-```
-/workspace
-├── src/                    # Code source React
-│   ├── components/         # Composants UI
-│   │   ├── ChatPanel.tsx   # Panel de chat IA
-│   │   ├── CodeEditor.tsx  # Éditeur Monaco
-│   │   ├── FileTree.tsx    # Arborescence fichiers
-│   │   ├── Sidebar.tsx     # Barre latérale
-│   │   ├── TerminalPanel.tsx  # Terminal
-│   │   ├── StatusBar.tsx   # Barre de statut
-│   │   └── ui/             # Composants de base
-│   ├── store/              # Zustand store
-│   ├── services/           # Services API
-│   ├── hooks/              # Hooks personnalisés
-│   └── types/              # Types TypeScript
-├── electron/               # Code Electron
-│   ├── main.ts             # Processus principal
-│   └── preload.ts          # Script de préchargement
-├── server/                 # Backend web
-│   └── index.ts            # Serveur Express + Socket.IO
-├── mcp/                    # Serveur MCP
-│   └── server.ts           # Outils et resources MCP
-├── public/                 # Assets statiques
-└── package.json            # Dépendances et scripts
-```
-
-## 🔒 Sécurité
-
-- **Context Isolation** - Séparation stricte renderer-main
-- **IPC Validation** - Validation des messages IPC
-- **CORS Configurable** - Protection des APIs
-- **API Keys Sécurisées** - Stockage local chiffré (à implémenter)
-
-## 🚀 Performances
-
-- **Vite HMR** - Hot Module Replacement instantané
-- **Code Splitting** - Chargement optimisé
+- **Vite HMR** - Hot Module Replacement instantané (<50ms)
+- **Code Splitting** - Chargement optimisé par route
 - **Lazy Loading** - Composants chargés à la demande
-- **Memoization** - Optimisation des re-renders
+- **Memoization** - Optimisation des re-renders React
+- **WebSocket Compression** - Messages compressés pour le terminal
+
+---
 
 ## 📝 Roadmap
 
@@ -231,23 +269,40 @@ Le serveur MCP expose ces outils :
 - [ ] Profiling de performances
 - [ ] Thèmes personnalisables
 - [ ] Plugins communautaires
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Veuillez lire notre guide de contribution avant de soumettre une PR.
-
-## 📄 License
-
-MIT License - Voir [LICENSE](LICENSE) pour plus de détails.
-
-## 🙏 Remerciements
-
-- [Monaco Editor](https://microsoft.github.io/monaco-editor/)
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [Electron](https://www.electronjs.org/)
-- [Vite](https://vitejs.dev/)
-- [TailwindCSS](https://tailwindcss.com/)
+- [ ] Intégration Docker
+- [ ] Support WSL2
 
 ---
 
-**Développé avec ❤️ par Ultra Code Studio Team**
+## 🤝 Contribuer
+
+Nous accueillons les contributions !
+1. Fork le projet.
+2. Créez une branche (`git checkout -b feature/AmazingFeature`).
+3. Committez vos changements (`git commit -m 'Add AmazingFeature'`).
+4. Push vers la branche (`git push origin feature/AmazingFeature`).
+5. Ouvrez une Pull Request.
+
+---
+
+## 📄 Licence
+
+Distribué sous la licence **MIT**. Voir [LICENSE](LICENSE) pour plus d'informations.
+
+---
+
+## 🙏 Remerciements
+
+- **Anthropic** pour l'inspiration Claude Code.
+- **Alibaba Cloud** pour l'interface Qwen Coder.
+- **Microsoft** pour Monaco Editor.
+- La communauté **Model Context Protocol**.
+- **Electron** pour le framework desktop.
+- **Vite** pour le build tool ultra-rapide.
+
+---
+
+<div align="center">
+  <strong>Développé avec ❤️ par Ultra Code Studio Team</strong><br>
+  <sub>Le futur du développement assisté par IA est ici.</sub>
+</div>
