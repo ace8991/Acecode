@@ -5,6 +5,16 @@ export interface Message {
   role: 'user' | 'assistant' | 'system'
   content: string
   timestamp: Date
+  attachments?: Attachment[]
+}
+
+export interface Attachment {
+  id: string
+  name: string
+  type: 'image' | 'document' | 'other'
+  url: string
+  size?: number
+  mimeType: string
 }
 
 export interface FileTab {
